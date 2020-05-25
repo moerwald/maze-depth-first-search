@@ -6,12 +6,18 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace mazeDfsAlgorithm
 {
-    public static class SearchThroughMaze
+    public  class SearchThroughMaze
     {
         private const int Wall = 1;
         private const int Exit = 2;
+        private readonly int[,] _maze;
 
-        public static List<Coordinate> Search(int[,] maze)
+        public SearchThroughMaze(int[,] maze)
+        {
+            _maze = maze;
+        }
+
+        public  List<Coordinate> Search(int[,] maze)
         {
             var start = new Coordinate { X = 0, Y = 0 };
             var path = new Stack<Coordinate>();
@@ -29,6 +35,7 @@ namespace mazeDfsAlgorithm
                 alreadyVisited.Add(actCoordinate);
 
                 Coordinate newCord;
+                bool newPathFound = false;
                 // Move down
                 if (!CoordinateIsOutsideOfMaze(x + 1, y))
                 {
@@ -48,6 +55,7 @@ namespace mazeDfsAlgorithm
                             {
                                 path.Push(newCord);
                                 Console.WriteLine("Moving Down");
+                                newPathFound = true;
                                 continue;
                             }
                         }

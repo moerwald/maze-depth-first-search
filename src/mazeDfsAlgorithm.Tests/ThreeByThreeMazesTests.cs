@@ -18,7 +18,7 @@ namespace mazeDfsAlgorithm.Tests
                 {0, 0 , 2, },
                 };
 
-            var result = SearchThroughMaze.Search(maze);
+            var result = new SearchThroughMaze(maze).Search(maze);
 
             Assert.IsTrue(result[4].Equals(new Coordinate { X = 0, Y = 0 }));
             Assert.IsTrue(result[3].Equals(new Coordinate { X = 1, Y = 0 }));
@@ -36,7 +36,7 @@ namespace mazeDfsAlgorithm.Tests
                 {0, 1 , 2, },
                 };
 
-            var result = SearchThroughMaze.Search(maze);
+            var result = new SearchThroughMaze(maze).Search(maze);
 
             Assert.IsTrue(result[4].Equals(new Coordinate { X = 0, Y = 0 }));
             Assert.IsTrue(result[3].Equals(new Coordinate { X = 0, Y = 1 }));
@@ -54,7 +54,7 @@ namespace mazeDfsAlgorithm.Tests
                 {0, 1 , 2, },
                 };
 
-            var result = SearchThroughMaze.Search(maze);
+            var result = new SearchThroughMaze(maze).Search(maze);
 
             Assert.IsTrue(result.Count == 0);
         }
