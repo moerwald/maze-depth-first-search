@@ -21,7 +21,7 @@ namespace mazeDfsAlgorithm
             _mazeWidth = maze.GetLength(1);
         }
 
-        public List<Coordinate> Search(int[,] maze)
+        public List<Coordinate> Search()
         {
             var start = new Coordinate { X = 0, Y = 0 };
             var path = new Stack<Coordinate>();
@@ -42,7 +42,7 @@ namespace mazeDfsAlgorithm
                 if (!CoordinateIsOutsideOfMaze(x + 1, y))
                 {
                     newCord = new Coordinate() { X = x + 1, Y = y };
-                    if (maze[x + 1, y] == Exit)
+                    if (_maze[x + 1, y] == Exit)
                     {
                         Console.WriteLine("WON (moving down)");
                         path.Push(newCord);
@@ -51,7 +51,7 @@ namespace mazeDfsAlgorithm
                     }
                     else if (!CoordinateIsOutsideOfMaze(x + 1, y))
                     {
-                        if (maze[x + 1, y] != Wall)
+                        if (_maze[x + 1, y] != Wall)
                         {
                             if (!alreadyVisited.Contains(newCord))
                             {
@@ -68,7 +68,7 @@ namespace mazeDfsAlgorithm
                 if (!CoordinateIsOutsideOfMaze(x - 1, y))
                 {
                     newCord = new Coordinate() { X = x - 1, Y = y };
-                    if (maze[x - 1, y] == Exit)
+                    if (_maze[x - 1, y] == Exit)
                     {
                         Console.WriteLine("WON (moving up)");
                         path.Push(newCord);
@@ -77,7 +77,7 @@ namespace mazeDfsAlgorithm
                     }
                     else if (!CoordinateIsOutsideOfMaze(x - 1, y))
                     {
-                        if (maze[x - 1, y] != Wall)
+                        if (_maze[x - 1, y] != Wall)
                         {
                             if (!alreadyVisited.Contains(newCord))
                             {
@@ -93,7 +93,7 @@ namespace mazeDfsAlgorithm
                 if (!CoordinateIsOutsideOfMaze(x, y + 1))
                 {
                     newCord = new Coordinate() { X = x, Y = y + 1 };
-                    if (maze[x, y + 1] == Exit)
+                    if (_maze[x, y + 1] == Exit)
                     {
                         path.Push(newCord);
                         Console.WriteLine("WON (moving right)");
@@ -101,7 +101,7 @@ namespace mazeDfsAlgorithm
                     }
                     else if (!CoordinateIsOutsideOfMaze(x, y + 1))
                     {
-                        if (maze[x, y + 1] != Wall)
+                        if (_maze[x, y + 1] != Wall)
                         {
                             if (!alreadyVisited.Contains(newCord))
                             {
@@ -117,7 +117,7 @@ namespace mazeDfsAlgorithm
                 if (!CoordinateIsOutsideOfMaze(x, y - 1))
                 {
                     newCord = new Coordinate() { X = x, Y = y - 1 };
-                    if (maze[x, y - 1] == Exit)
+                    if (_maze[x, y - 1] == Exit)
                     {
                         path.Push(newCord);
                         Console.WriteLine("WON (moving left)");
@@ -125,7 +125,7 @@ namespace mazeDfsAlgorithm
                     }
                     else if (!CoordinateIsOutsideOfMaze(x, y - 1))
                     {
-                        if (maze[x, y - 1] != Wall)
+                        if (_maze[x, y - 1] != Wall)
                         {
                             if (!alreadyVisited.Contains(newCord))
                             {
