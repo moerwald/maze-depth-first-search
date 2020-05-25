@@ -21,17 +21,6 @@ namespace mazeDfsAlgorithm.Tests
 
             var result = SearchThroughMaze.Search(maze);
 
-            // 0 , 0
-            // 1 , 0
-            // 2 , 0
-            // 3 , 0
-            // 4 , 0
-            // 4 , 1
-            // 4 , 2
-            // 3 , 2
-            // 2 , 2
-            // 1 , 2
-            // 0 , 2
             Assert.IsTrue(result[16].Equals(new Coordinate { X = 0, Y = 0 }));
             Assert.IsTrue(result[15].Equals(new Coordinate { X = 1, Y = 0 }));
             Assert.IsTrue(result[14].Equals(new Coordinate { X = 2, Y = 0 }));
