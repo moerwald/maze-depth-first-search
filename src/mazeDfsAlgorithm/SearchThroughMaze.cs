@@ -6,25 +6,27 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace mazeDfsAlgorithm
 {
-    public  class SearchThroughMaze
+    public class SearchThroughMaze
     {
         private const int Wall = 1;
         private const int Exit = 2;
         private readonly int[,] _maze;
+        private readonly int _mazeHight;
+        private readonly int _mazeWidth;
 
         public SearchThroughMaze(int[,] maze)
         {
             _maze = maze;
+            _mazeHight = maze.GetLength(0);
+            _mazeWidth = maze.GetLength(1);
         }
 
-        public  List<Coordinate> Search(int[,] maze)
+        public List<Coordinate> Search(int[,] maze)
         {
             var start = new Coordinate { X = 0, Y = 0 };
             var path = new Stack<Coordinate>();
             var alreadyVisited = new HashSet<Coordinate>();
 
-            var mazeHight = maze.GetLength(0);
-            var mazeWidth = maze.GetLength(1);
             path.Push(start);
             while (path.Any())
             {
@@ -39,7 +41,7 @@ namespace mazeDfsAlgorithm
                 // Move down
                 if (!CoordinateIsOutsideOfMaze(x + 1, y))
                 {
-                     newCord = new Coordinate() { X = x + 1, Y = y };
+                    newCord = new Coordinate() { X = x + 1, Y = y };
                     if (maze[x + 1, y] == Exit)
                     {
                         Console.WriteLine("WON (moving down)");
@@ -142,11 +144,11 @@ namespace mazeDfsAlgorithm
 
             return new List<Coordinate>();
 
-            bool CoordinateIsOutsideOfMaze(int nextX, int nextY)
-            {
-                return (nextY < 0 || nextY >= mazeWidth) ||
-                       (nextX < 0 || nextX >= mazeHight);
-            }
+        }
+        private bool CoordinateIsOutsideOfMaze(int nextX, int nextY)
+        {
+            return (nextY < 0 || nextY >= _mazeWidth) ||
+                   (nextX < 0 || nextX >= _mazeHight);
         }
 
     }
