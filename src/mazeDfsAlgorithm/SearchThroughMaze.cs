@@ -68,17 +68,16 @@ namespace mazeDfsAlgorithm
         }
 
         private bool CanMoveRight(int x, int y)
-            => CanMoveTo(_pathThroughMaze, x, y + 1);
+            => CanMoveTo( x, y + 1);
         private bool CanMoveLeft(int x, int y)
-            => CanMoveTo(_pathThroughMaze, x, y - 1);
+            => CanMoveTo( x, y - 1);
 
         private bool CanMoveDown(int x, int y)
-            => CanMoveTo(_pathThroughMaze, x + 1, y);
+            => CanMoveTo( x + 1, y);
         private bool CanMoveUp(int x, int y)
-            => CanMoveTo(_pathThroughMaze, x - 1, y);
+            => CanMoveTo( x - 1, y);
 
         private bool CanMoveTo(
-            Stack<Coordinate> path,
             int x,
             int y)
         {
@@ -91,7 +90,7 @@ namespace mazeDfsAlgorithm
             if (mazeValue == Exit)
             {
                 Console.WriteLine("WON (moving down)");
-                path.Push(newCord);
+                _pathThroughMaze.Push(newCord);
                 _exitFound = true;
                 newPathFound = true;
             }
@@ -101,7 +100,7 @@ namespace mazeDfsAlgorithm
                     !_alreadyVisitedCoordinates.Contains(newCord)
                     )
                 {
-                    path.Push(newCord);
+                    _pathThroughMaze.Push(newCord);
                     Console.WriteLine("Moving Down");
                     newPathFound = true;
                 }
