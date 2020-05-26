@@ -13,64 +13,69 @@ namespace mazeDfsAlgorithm
         private readonly int[,] _maze;
         private readonly int _mazeHight;
         private readonly int _mazeWidth;
-        private readonly Stack<Coordinate> _path;
+        private readonly Stack<Coordinate> _pathThroughMaze;
         private bool _exitFound;
+
+        public HashSet<Coordinate> _alreadyVisitedCoordinates { get; private set; }
 
         public SearchThroughMaze(int[,] maze)
         {
             _maze = maze;
             _mazeHight = maze.GetLength(0);
             _mazeWidth = maze.GetLength(1);
-            _path = new Stack<Coordinate>();
+            _pathThroughMaze = new Stack<Coordinate>();
         }
 
         public List<Coordinate> Search()
         {
             var start = new Coordinate { X = 0, Y = 0 };
-            var alreadyVisited = new HashSet<Coordinate>();
+            _alreadyVisitedCoordinates = new HashSet<Coordinate>();
 
-            _path.Push(start);
-            while (_path.Any())
+            _pathThroughMaze.Push(start);
+            while (_pathThroughMaze.Any())
             {
-                var actCoordinate = _path.Peek();
+                var actCoordinate = _pathThroughMaze.Peek();
                 var x = actCoordinate.X;
                 var y = actCoordinate.Y;
 
-                alreadyVisited.Add(actCoordinate);
+                _alreadyVisitedCoordinates.Add(actCoordinate);
 
                 if (_exitFound)
-                    return _path.ToList();
+                    return _pathThroughMaze.ToList();
 
-                if (CanMoveDown(alreadyVisited, x, y))
+                if (CanMoveDown(_alreadyVisitedCoordinates, x, y))
                     continue;
 
-                if (CanMoveUp(alreadyVisited, x, y))
+                if (CanMoveUp(_alreadyVisitedCoordinates, x, y))
                     continue;
 
-                if (CanMoveRight(alreadyVisited, x, y))
+                if (CanMoveRight(_alreadyVisitedCoordinates, x, y))
                     continue;
 
-                if (CanMoveRight(alreadyVisited, x, y))
+                if (CanMoveLeft(_alreadyVisitedCoordinates, x, y))
                     continue;
 
-                // Backtracking -> remove actual entry from the path stack
-                Console.WriteLine("Dead end!");
-                _path.Pop();
+                CantMoveGoOneStepBack();
             }
 
             return new List<Coordinate>();
+        }
 
+        private void CantMoveGoOneStepBack()
+        {
+            Console.WriteLine("Dead end!");
+            _pathThroughMaze.Pop();
         }
 
         private bool CanMoveRight(HashSet<Coordinate> alreadyVisited, int x, int y)
-            => CanMoveTo(_path, alreadyVisited, x, y + 1);
+            => CanMoveTo(_pathThroughMaze, alreadyVisited, x, y + 1);
         private bool CanMoveLeft(HashSet<Coordinate> alreadyVisited, int x, int y)
-            => CanMoveTo(_path, alreadyVisited, x, y - 1);
+            => CanMoveTo(_pathThroughMaze, alreadyVisited, x, y - 1);
 
         private bool CanMoveDown(HashSet<Coordinate> alreadyVisited, int x, int y)
-            => CanMoveTo(_path, alreadyVisited, x + 1, y);
+            => CanMoveTo(_pathThroughMaze, alreadyVisited, x + 1, y);
         private bool CanMoveUp(HashSet<Coordinate> alreadyVisited, int x, int y)
-            => CanMoveTo(_path, alreadyVisited, x - 1, y);
+            => CanMoveTo(_pathThroughMaze, alreadyVisited, x - 1, y);
 
         private bool CanMoveTo(
             Stack<Coordinate> path,
@@ -79,25 +84,27 @@ namespace mazeDfsAlgorithm
             int y)
         {
             var newPathFound = false;
-            if (!CoordinateIsOutsideOfMaze(x, y))
+            if (CoordinateIsOutsideOfMaze(x, y))
+                return newPathFound;
+
+            var newCord = new Coordinate() { X = x, Y = y };
+            var mazeValue = _maze[x, y];
+            if (mazeValue == Exit)
             {
-                var newCord = new Coordinate() { X = x, Y = y };
-                var mazeValue = _maze[x, y];
-                if (mazeValue == Exit)
+                Console.WriteLine("WON (moving down)");
+                path.Push(newCord);
+                _exitFound = true;
+                newPathFound = true;
+            }
+            else if (mazeValue != Wall)
+            {
+                if (
+                    !alreadyVisited.Contains(newCord)
+                    )
                 {
-                    Console.WriteLine("WON (moving down)");
                     path.Push(newCord);
-                    _exitFound = true;
+                    Console.WriteLine("Moving Down");
                     newPathFound = true;
-                }
-                else if (mazeValue != Wall)
-                {
-                    if (!alreadyVisited.Contains(newCord))
-                    {
-                        path.Push(newCord);
-                        Console.WriteLine("Moving Down");
-                        newPathFound = true;
-                    }
                 }
             }
 
