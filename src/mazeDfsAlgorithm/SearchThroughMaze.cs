@@ -58,10 +58,7 @@ namespace mazeDfsAlgorithm
             return new List<Coordinate>();
         }
 
-        private void CantMoveGoOneStepBack()
-        {
-            _pathThroughMaze.Pop();
-        }
+        private void CantMoveGoOneStepBack() => _pathThroughMaze.Pop();
 
         private bool CanMoveRight(int x, int y) => CanMoveTo(x, y + 1);
         private bool CanMoveLeft(int x, int y) => CanMoveTo(x, y - 1);
@@ -79,7 +76,7 @@ namespace mazeDfsAlgorithm
             var mazeValue = _maze[x, y];
             if (mazeValue == Exit)
             {
-                _pathThroughMaze.Push(newCord);
+                AddMoveToMazePath(newCord);
                 _exitFound = true;
                 newPathFound = true;
             }
@@ -89,13 +86,15 @@ namespace mazeDfsAlgorithm
                     !_alreadyVisitedCoordinates.Contains(newCord)
                     )
                 {
-                    _pathThroughMaze.Push(newCord);
+                    AddMoveToMazePath(newCord);
                     newPathFound = true;
                 }
             }
 
             return newPathFound;
         }
+
+        private void AddMoveToMazePath(Coordinate newCord) => _pathThroughMaze.Push(newCord);
 
         private bool CoordinateIsOutsideOfMaze(int nextX, int nextY)
         {
