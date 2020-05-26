@@ -8,20 +8,19 @@ namespace mazeDfsAlgorithm
 
         private readonly Maze _maze;
         private readonly Stack<Coordinate> _pathThroughMaze;
+        private readonly HashSet<Coordinate> _alreadyVisitedCoordinates;
         private bool _exitFound;
-
-        public HashSet<Coordinate> _alreadyVisitedCoordinates { get; private set; }
 
         public SearchThroughMaze(int[,] maze)
         {
             _maze = new Maze(maze);
             _pathThroughMaze = new Stack<Coordinate>();
+            _alreadyVisitedCoordinates = new HashSet<Coordinate>();
         }
 
         public List<Coordinate> Search()
         {
             var start = new Coordinate { X = 0, Y = 0 };
-            _alreadyVisitedCoordinates = new HashSet<Coordinate>();
 
             _pathThroughMaze.Push(start);
             while (_pathThroughMaze.Any())
