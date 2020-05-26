@@ -41,28 +41,16 @@ namespace mazeDfsAlgorithm
                 if (_exitFound)
                     return _path.ToList();
 
-                // Move down
-                if (
-                    CanMoveDown(alreadyVisited, x, y)
-                    )
+                if (CanMoveDown(alreadyVisited, x, y))
                     continue;
 
-                // Move up
-                if (
-                    CanMoveUp(alreadyVisited, x, y)
-                    )
+                if (CanMoveUp(alreadyVisited, x, y))
                     continue;
 
-                // Move right
-                if (
-                    CanMoveRight(alreadyVisited, x, y)
-                    )
+                if (CanMoveRight(alreadyVisited, x, y))
                     continue;
 
-                // Move left
-                if (
-                    CanMoveRight(alreadyVisited, x, y)
-                    )
+                if (CanMoveRight(alreadyVisited, x, y))
                     continue;
 
                 // Backtracking -> remove actual entry from the path stack
