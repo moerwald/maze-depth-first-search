@@ -15,15 +15,18 @@ namespace mazeDfsAlgorithm
             _mazeWidth = maze.GetLength(1);
         }
 
-        public bool CoordinatesOutsideOfMaze(int x, int y)
+        public bool CoordinatesOutsideOfMaze(Coordinate coordinate)
         {
+            var x = coordinate.X;
+            var y = coordinate.Y;
             return (y < 0 || y >= _mazeWidth) ||
                    (x < 0 || x >= _mazeHight);
         }
 
-        public bool IsWall(int value) => value == 1;
+        public int GetValueAt(Coordinate coordinate) => _maze[coordinate.X, coordinate.Y];
 
-        public bool IsExit(int mazeValue) => mazeValue == 2;
-        public int GetValueAt(int x, int y) => _maze[x, y];
+        internal bool IsExit(Coordinate newCord) => GetValueAt(newCord) == 2;
+
+        internal bool IsWall(Coordinate newCord) => GetValueAt(newCord) == 1;
     }
 }

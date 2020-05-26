@@ -3,7 +3,6 @@ using System.Linq;
 
 namespace mazeDfsAlgorithm
 {
-
     public class SearchThroughMaze
     {
 
@@ -28,24 +27,22 @@ namespace mazeDfsAlgorithm
             while (_pathThroughMaze.Any())
             {
                 var actCoordinate = _pathThroughMaze.Peek();
-                var x = actCoordinate.X;
-                var y = actCoordinate.Y;
 
                 _alreadyVisitedCoordinates.Add(actCoordinate);
 
                 if (_exitFound)
                     return _pathThroughMaze.ToList();
 
-                if (CanMoveDown(x, y))
+                if (CanMoveDown(actCoordinate))
                     continue;
 
-                if (CanMoveUp(x, y))
+                if (CanMoveUp(actCoordinate))
                     continue;
 
-                if (CanMoveRight(x, y))
+                if (CanMoveRight(actCoordinate))
                     continue;
 
-                if (CanMoveLeft(x, y))
+                if (CanMoveLeft(actCoordinate))
                     continue;
 
                 CantMoveGoOneStepBack();
@@ -56,31 +53,32 @@ namespace mazeDfsAlgorithm
 
         private void CantMoveGoOneStepBack() => _pathThroughMaze.Pop();
 
-        private bool CanMoveRight(int x, int y) => CanMoveTo(x, y + 1);
-        private bool CanMoveLeft(int x, int y) => CanMoveTo(x, y - 1);
+        private bool CanMoveRight(Coordinate coordinate) 
+            => CanMoveTo(new Coordinate { X = coordinate.X, Y = coordinate.Y + 1 });
+        private bool CanMoveLeft(Coordinate coordinate) 
+            => CanMoveTo(new Coordinate { X = coordinate.X, Y = coordinate.Y - 1 });
+        private bool CanMoveDown(Coordinate coordinate) 
+            => CanMoveTo(new Coordinate { X = coordinate.X + 1, Y = coordinate.Y  });
+        private bool CanMoveUp(Coordinate coordinate) 
+            => CanMoveTo(new Coordinate { X = coordinate.X - 1, Y = coordinate.Y  });
 
-        private bool CanMoveDown(int x, int y) => CanMoveTo(x + 1, y);
-        private bool CanMoveUp(int x, int y) => CanMoveTo(x - 1, y);
-
-        private bool CanMoveTo(int x, int y)
+        private bool CanMoveTo(Coordinate coordinate)
         {
             var newPathFound = false;
-            if (_maze.CoordinatesOutsideOfMaze(x, y))
+            if (_maze.CoordinatesOutsideOfMaze(coordinate))
                 return newPathFound;
 
-            var newCord = new Coordinate() { X = x, Y = y };
-            var mazeValue = _maze.GetValueAt(x, y);
-            if (_maze.IsExit(mazeValue))
+            if (_maze.IsExit(coordinate))
             {
-                AddMoveToMazePath(newCord);
+                AddMoveToMazePath(coordinate);
                 _exitFound = true;
                 newPathFound = true;
             }
-            else if (!_maze.IsWall(mazeValue))
+            else if (!_maze.IsWall(coordinate))
             {
-                if (CoordinateWasNotVisited(newCord))
+                if (CoordinateWasNotVisited(coordinate))
                 {
-                    AddMoveToMazePath(newCord);
+                    AddMoveToMazePath(coordinate);
                     newPathFound = true;
                 }
             }
