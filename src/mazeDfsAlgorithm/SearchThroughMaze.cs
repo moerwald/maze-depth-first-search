@@ -31,16 +31,16 @@ namespace mazeDfsAlgorithm
                 if (_exitFound)
                     return _pathThroughMaze.ToList();
 
-                if (CanMoveDown(actCoordinate))
+                if (CanMoveDownFrom(actCoordinate))
                     continue;
 
-                if (CanMoveUp(actCoordinate))
+                if (CanMoveUpFrom(actCoordinate))
                     continue;
 
-                if (CanMoveRight(actCoordinate))
+                if (CanMoveRightFrom(actCoordinate))
                     continue;
 
-                if (CanMoveLeft(actCoordinate))
+                if (CanMoveLeftFrom(actCoordinate))
                     continue;
 
                 CantMoveGoOneStepBack();
@@ -51,13 +51,13 @@ namespace mazeDfsAlgorithm
 
         private void CantMoveGoOneStepBack() => _pathThroughMaze.Pop();
 
-        private bool CanMoveRight(Coordinate coordinate)
+        private bool CanMoveRightFrom(Coordinate coordinate)
             => CanMoveTo(new Coordinate { X = coordinate.X, Y = coordinate.Y + 1 });
-        private bool CanMoveLeft(Coordinate coordinate)
+        private bool CanMoveLeftFrom(Coordinate coordinate)
             => CanMoveTo(new Coordinate { X = coordinate.X, Y = coordinate.Y - 1 });
-        private bool CanMoveDown(Coordinate coordinate)
+        private bool CanMoveDownFrom(Coordinate coordinate)
             => CanMoveTo(new Coordinate { X = coordinate.X + 1, Y = coordinate.Y });
-        private bool CanMoveUp(Coordinate coordinate)
+        private bool CanMoveUpFrom(Coordinate coordinate)
             => CanMoveTo(new Coordinate { X = coordinate.X - 1, Y = coordinate.Y });
 
         private bool CanMoveTo(Coordinate coordinate)
