@@ -131,32 +131,30 @@ namespace mazeDfsAlgorithm
         }
 
         private bool CanMoveTo(
-            Stack<Coordinate> path, 
-            HashSet<Coordinate> alreadyVisited, 
-            int x, 
+            Stack<Coordinate> path,
+            HashSet<Coordinate> alreadyVisited,
+            int x,
             int y)
         {
             var newPathFound = false;
-            if (!CoordinateIsOutsideOfMaze(x , y))
+            if (!CoordinateIsOutsideOfMaze(x, y))
             {
-                var newCord = new Coordinate() { X = x , Y = y };
-                if (_maze[x , y] == Exit)
+                var newCord = new Coordinate() { X = x, Y = y };
+                var mazeValue = _maze[x, y];
+                if (mazeValue == Exit)
                 {
                     Console.WriteLine("WON (moving down)");
                     path.Push(newCord);
                     _exitFound = true;
                     newPathFound = true;
                 }
-                else if (!CoordinateIsOutsideOfMaze(x , y))
+                else if (mazeValue != Wall)
                 {
-                    if (_maze[x , y] != Wall)
+                    if (!alreadyVisited.Contains(newCord))
                     {
-                        if (!alreadyVisited.Contains(newCord))
-                        {
-                            path.Push(newCord);
-                            Console.WriteLine("Moving Down");
-                            newPathFound = true;
-                        }
+                        path.Push(newCord);
+                        Console.WriteLine("Moving Down");
+                        newPathFound = true;
                     }
                 }
             }
