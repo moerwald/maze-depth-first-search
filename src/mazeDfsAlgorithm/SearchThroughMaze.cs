@@ -63,7 +63,6 @@ namespace mazeDfsAlgorithm
 
         private void CantMoveGoOneStepBack()
         {
-            Console.WriteLine("Dead end!");
             _pathThroughMaze.Pop();
         }
 
@@ -83,7 +82,6 @@ namespace mazeDfsAlgorithm
             var mazeValue = _maze[x, y];
             if (mazeValue == Exit)
             {
-                Console.WriteLine("WON (moving down)");
                 _pathThroughMaze.Push(newCord);
                 _exitFound = true;
                 newPathFound = true;
@@ -95,7 +93,6 @@ namespace mazeDfsAlgorithm
                     )
                 {
                     _pathThroughMaze.Push(newCord);
-                    Console.WriteLine("Moving Down");
                     newPathFound = true;
                 }
             }
