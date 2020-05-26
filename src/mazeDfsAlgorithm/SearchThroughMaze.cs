@@ -82,9 +82,7 @@ namespace mazeDfsAlgorithm
             }
             else if (mazeValue != Wall)
             {
-                if (
-                    !_alreadyVisitedCoordinates.Contains(newCord)
-                    )
+                if (CoordinateWasNotVisited(newCord))
                 {
                     AddMoveToMazePath(newCord);
                     newPathFound = true;
@@ -93,6 +91,8 @@ namespace mazeDfsAlgorithm
 
             return newPathFound;
         }
+
+        private bool CoordinateWasNotVisited(Coordinate newCord) => !_alreadyVisitedCoordinates.Contains(newCord);
 
         private void AddMoveToMazePath(Coordinate newCord) => _pathThroughMaze.Push(newCord);
 
