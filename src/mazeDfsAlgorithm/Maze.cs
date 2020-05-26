@@ -1,4 +1,6 @@
-﻿namespace mazeDfsAlgorithm
+﻿using System;
+
+namespace mazeDfsAlgorithm
 {
     public class Maze
     {
@@ -19,6 +21,9 @@
                    (x < 0 || x >= _mazeHight);
         }
 
+        public bool IsWall(int value) => value == 1;
+
+        public bool IsExit(int mazeValue) => mazeValue == 2;
         public int GetValueAt(int x, int y) => _maze[x, y];
     }
 }

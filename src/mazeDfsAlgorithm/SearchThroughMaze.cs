@@ -6,8 +6,6 @@ namespace mazeDfsAlgorithm
 
     public class SearchThroughMaze
     {
-        private const int Wall = 1;
-        private const int Exit = 2;
 
         private readonly Maze _maze;
         private readonly Stack<Coordinate> _pathThroughMaze;
@@ -72,13 +70,13 @@ namespace mazeDfsAlgorithm
 
             var newCord = new Coordinate() { X = x, Y = y };
             var mazeValue = _maze.GetValueAt(x, y);
-            if (mazeValue == Exit)
+            if (_maze.IsExit(mazeValue))
             {
                 AddMoveToMazePath(newCord);
                 _exitFound = true;
                 newPathFound = true;
             }
-            else if (mazeValue != Wall)
+            else if (!_maze.IsWall(mazeValue))
             {
                 if (CoordinateWasNotVisited(newCord))
                 {
