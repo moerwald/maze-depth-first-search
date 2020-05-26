@@ -43,83 +43,27 @@ namespace mazeDfsAlgorithm
 
                 // Move down
                 if (
-                    CanMoveTo(_path, alreadyVisited, x + 1, y)
+                    CanMoveDown(alreadyVisited, x, y)
                     )
                     continue;
 
                 // Move up
-                Coordinate newCord;
-                if (!CoordinateIsOutsideOfMaze(x - 1, y))
-                {
-                    newCord = new Coordinate() { X = x - 1, Y = y };
-                    if (_maze[x - 1, y] == Exit)
-                    {
-                        Console.WriteLine("WON (moving up)");
-                        _path.Push(newCord);
-
-                        return _path.ToList();
-                    }
-                    else if (!CoordinateIsOutsideOfMaze(x - 1, y))
-                    {
-                        if (_maze[x - 1, y] != Wall)
-                        {
-                            if (!alreadyVisited.Contains(newCord))
-                            {
-                                _path.Push(newCord);
-                                Console.WriteLine("Moving Up");
-                                continue;
-                            }
-                        }
-                    }
-                }
+                if (
+                    CanMoveUp(alreadyVisited, x, y)
+                    )
+                    continue;
 
                 // Move right
-                if (!CoordinateIsOutsideOfMaze(x, y + 1))
-                {
-                    newCord = new Coordinate() { X = x, Y = y + 1 };
-                    if (_maze[x, y + 1] == Exit)
-                    {
-                        _path.Push(newCord);
-                        Console.WriteLine("WON (moving right)");
-                        return _path.ToList();
-                    }
-                    else if (!CoordinateIsOutsideOfMaze(x, y + 1))
-                    {
-                        if (_maze[x, y + 1] != Wall)
-                        {
-                            if (!alreadyVisited.Contains(newCord))
-                            {
-                                _path.Push(newCord);
-                                Console.WriteLine("Moving Right");
-                                continue;
-                            }
-                        }
-                    }
-                }
+                if (
+                    CanMoveRight(alreadyVisited, x, y)
+                    )
+                    continue;
 
                 // Move left
-                if (!CoordinateIsOutsideOfMaze(x, y - 1))
-                {
-                    newCord = new Coordinate() { X = x, Y = y - 1 };
-                    if (_maze[x, y - 1] == Exit)
-                    {
-                        _path.Push(newCord);
-                        Console.WriteLine("WON (moving left)");
-                        return _path.ToList();
-                    }
-                    else if (!CoordinateIsOutsideOfMaze(x, y - 1))
-                    {
-                        if (_maze[x, y - 1] != Wall)
-                        {
-                            if (!alreadyVisited.Contains(newCord))
-                            {
-                                _path.Push(newCord);
-                                Console.WriteLine("Moving Left");
-                                continue;
-                            }
-                        }
-                    }
-                }
+                if (
+                    CanMoveRight(alreadyVisited, x, y)
+                    )
+                    continue;
 
                 // Backtracking -> remove actual entry from the path stack
                 Console.WriteLine("Dead end!");
@@ -129,6 +73,16 @@ namespace mazeDfsAlgorithm
             return new List<Coordinate>();
 
         }
+
+        private bool CanMoveRight(HashSet<Coordinate> alreadyVisited, int x, int y)
+            => CanMoveTo(_path, alreadyVisited, x, y + 1);
+        private bool CanMoveLeft(HashSet<Coordinate> alreadyVisited, int x, int y)
+            => CanMoveTo(_path, alreadyVisited, x, y - 1);
+
+        private bool CanMoveDown(HashSet<Coordinate> alreadyVisited, int x, int y)
+            => CanMoveTo(_path, alreadyVisited, x + 1, y);
+        private bool CanMoveUp(HashSet<Coordinate> alreadyVisited, int x, int y)
+            => CanMoveTo(_path, alreadyVisited, x - 1, y);
 
         private bool CanMoveTo(
             Stack<Coordinate> path,
