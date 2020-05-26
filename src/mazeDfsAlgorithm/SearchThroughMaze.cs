@@ -3,13 +3,13 @@ using System.Linq;
 
 namespace mazeDfsAlgorithm
 {
+
     public class SearchThroughMaze
     {
         private const int Wall = 1;
         private const int Exit = 2;
-        private readonly int[,] _maze;
-        private readonly int _mazeHight;
-        private readonly int _mazeWidth;
+
+        private readonly Maze _maze;
         private readonly Stack<Coordinate> _pathThroughMaze;
         private bool _exitFound;
 
@@ -17,9 +17,7 @@ namespace mazeDfsAlgorithm
 
         public SearchThroughMaze(int[,] maze)
         {
-            _maze = maze;
-            _mazeHight = maze.GetLength(0);
-            _mazeWidth = maze.GetLength(1);
+            _maze = new Maze(maze);
             _pathThroughMaze = new Stack<Coordinate>();
         }
 
@@ -69,11 +67,11 @@ namespace mazeDfsAlgorithm
         private bool CanMoveTo(int x, int y)
         {
             var newPathFound = false;
-            if (CoordinateIsOutsideOfMaze(x, y))
+            if (_maze.CoordinatesOutsideOfMaze(x, y))
                 return newPathFound;
 
             var newCord = new Coordinate() { X = x, Y = y };
-            var mazeValue = _maze[x, y];
+            var mazeValue = _maze.GetValueAt(x, y);
             if (mazeValue == Exit)
             {
                 AddMoveToMazePath(newCord);
@@ -95,12 +93,5 @@ namespace mazeDfsAlgorithm
         private bool CoordinateWasNotVisited(Coordinate newCord) => !_alreadyVisitedCoordinates.Contains(newCord);
 
         private void AddMoveToMazePath(Coordinate newCord) => _pathThroughMaze.Push(newCord);
-
-        private bool CoordinateIsOutsideOfMaze(int nextX, int nextY)
-        {
-            return (nextY < 0 || nextY >= _mazeWidth) ||
-                   (nextX < 0 || nextX >= _mazeHight);
-        }
-
     }
 }
