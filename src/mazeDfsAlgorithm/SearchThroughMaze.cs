@@ -43,16 +43,16 @@ namespace mazeDfsAlgorithm
                 if (_exitFound)
                     return _pathThroughMaze.ToList();
 
-                if (CanMoveDown( x, y))
+                if (CanMoveDown(x, y))
                     continue;
 
-                if (CanMoveUp( x, y))
+                if (CanMoveUp(x, y))
                     continue;
 
-                if (CanMoveRight( x, y))
+                if (CanMoveRight(x, y))
                     continue;
 
-                if (CanMoveLeft( x, y))
+                if (CanMoveLeft(x, y))
                     continue;
 
                 CantMoveGoOneStepBack();
@@ -67,19 +67,13 @@ namespace mazeDfsAlgorithm
             _pathThroughMaze.Pop();
         }
 
-        private bool CanMoveRight(int x, int y)
-            => CanMoveTo( x, y + 1);
-        private bool CanMoveLeft(int x, int y)
-            => CanMoveTo( x, y - 1);
+        private bool CanMoveRight(int x, int y) => CanMoveTo(x, y + 1);
+        private bool CanMoveLeft(int x, int y) => CanMoveTo(x, y - 1);
 
-        private bool CanMoveDown(int x, int y)
-            => CanMoveTo( x + 1, y);
-        private bool CanMoveUp(int x, int y)
-            => CanMoveTo( x - 1, y);
+        private bool CanMoveDown(int x, int y) => CanMoveTo(x + 1, y);
+        private bool CanMoveUp(int x, int y) => CanMoveTo(x - 1, y);
 
-        private bool CanMoveTo(
-            int x,
-            int y)
+        private bool CanMoveTo(int x, int y)
         {
             var newPathFound = false;
             if (CoordinateIsOutsideOfMaze(x, y))
