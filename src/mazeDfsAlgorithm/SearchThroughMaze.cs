@@ -20,9 +20,8 @@ namespace mazeDfsAlgorithm
 
         public List<Coordinate> Search()
         {
-            var start = new Coordinate { X = 0, Y = 0 };
+            _pathThroughMaze.Push(new Coordinate { X = 0, Y = 0 });
 
-            _pathThroughMaze.Push(start);
             while (_pathThroughMaze.Any())
             {
                 var actCoordinate = _pathThroughMaze.Peek();
@@ -52,14 +51,14 @@ namespace mazeDfsAlgorithm
 
         private void CantMoveGoOneStepBack() => _pathThroughMaze.Pop();
 
-        private bool CanMoveRight(Coordinate coordinate) 
+        private bool CanMoveRight(Coordinate coordinate)
             => CanMoveTo(new Coordinate { X = coordinate.X, Y = coordinate.Y + 1 });
-        private bool CanMoveLeft(Coordinate coordinate) 
+        private bool CanMoveLeft(Coordinate coordinate)
             => CanMoveTo(new Coordinate { X = coordinate.X, Y = coordinate.Y - 1 });
-        private bool CanMoveDown(Coordinate coordinate) 
-            => CanMoveTo(new Coordinate { X = coordinate.X + 1, Y = coordinate.Y  });
-        private bool CanMoveUp(Coordinate coordinate) 
-            => CanMoveTo(new Coordinate { X = coordinate.X - 1, Y = coordinate.Y  });
+        private bool CanMoveDown(Coordinate coordinate)
+            => CanMoveTo(new Coordinate { X = coordinate.X + 1, Y = coordinate.Y });
+        private bool CanMoveUp(Coordinate coordinate)
+            => CanMoveTo(new Coordinate { X = coordinate.X - 1, Y = coordinate.Y });
 
         private bool CanMoveTo(Coordinate coordinate)
         {
