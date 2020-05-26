@@ -68,18 +68,17 @@ namespace mazeDfsAlgorithm
         }
 
         private bool CanMoveRight(HashSet<Coordinate> alreadyVisited, int x, int y)
-            => CanMoveTo(_pathThroughMaze, alreadyVisited, x, y + 1);
+            => CanMoveTo(_pathThroughMaze, x, y + 1);
         private bool CanMoveLeft(HashSet<Coordinate> alreadyVisited, int x, int y)
-            => CanMoveTo(_pathThroughMaze, alreadyVisited, x, y - 1);
+            => CanMoveTo(_pathThroughMaze, x, y - 1);
 
         private bool CanMoveDown(HashSet<Coordinate> alreadyVisited, int x, int y)
-            => CanMoveTo(_pathThroughMaze, alreadyVisited, x + 1, y);
+            => CanMoveTo(_pathThroughMaze, x + 1, y);
         private bool CanMoveUp(HashSet<Coordinate> alreadyVisited, int x, int y)
-            => CanMoveTo(_pathThroughMaze, alreadyVisited, x - 1, y);
+            => CanMoveTo(_pathThroughMaze, x - 1, y);
 
         private bool CanMoveTo(
             Stack<Coordinate> path,
-            HashSet<Coordinate> alreadyVisited,
             int x,
             int y)
         {
@@ -99,7 +98,7 @@ namespace mazeDfsAlgorithm
             else if (mazeValue != Wall)
             {
                 if (
-                    !alreadyVisited.Contains(newCord)
+                    !_alreadyVisitedCoordinates.Contains(newCord)
                     )
                 {
                     path.Push(newCord);
