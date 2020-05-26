@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace mazeDfsAlgorithm
@@ -9,13 +10,15 @@ namespace mazeDfsAlgorithm
         private readonly Maze _maze;
         private readonly Stack<Coordinate> _pathThroughMaze;
         private readonly HashSet<Coordinate> _alreadyVisitedCoordinates;
+        private readonly Action<Coordinate> _moveToNext;
         private bool _exitFound;
 
-        public SearchThroughMaze(int[,] maze)
+        public SearchThroughMaze(Maze maze, Action<Coordinate> moveToNext)
         {
-            _maze = new Maze(maze);
+            _maze = maze;
             _pathThroughMaze = new Stack<Coordinate>();
             _alreadyVisitedCoordinates = new HashSet<Coordinate>();
+            _moveToNext = moveToNext;
         }
 
         public List<Coordinate> Search()
@@ -86,6 +89,10 @@ namespace mazeDfsAlgorithm
 
         private bool CoordinateWasNotVisited(Coordinate newCord) => !_alreadyVisitedCoordinates.Contains(newCord);
 
-        private void MoveNextTo(Coordinate newCord) => _pathThroughMaze.Push(newCord);
+        private void MoveNextTo(Coordinate newCord)
+        {
+            _pathThroughMaze.Push(newCord);
+            _moveToNext?.Invoke(newCord);
+        }
     }
 }
