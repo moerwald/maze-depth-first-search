@@ -63,30 +63,30 @@ namespace mazeDfsAlgorithm
 
         private bool CanMoveTo(Coordinate coordinate)
         {
-            var newPathFound = false;
+            var canMoveToCoordinate = false;
             if (_maze.CoordinatesOutsideOfMaze(coordinate))
-                return newPathFound;
+                return canMoveToCoordinate;
 
             if (_maze.IsExit(coordinate))
             {
-                AddMoveToMazePath(coordinate);
+                MoveNextTo(coordinate);
                 _exitFound = true;
-                newPathFound = true;
+                canMoveToCoordinate = true;
             }
             else if (!_maze.IsWall(coordinate))
             {
                 if (CoordinateWasNotVisited(coordinate))
                 {
-                    AddMoveToMazePath(coordinate);
-                    newPathFound = true;
+                    MoveNextTo(coordinate);
+                    canMoveToCoordinate = true;
                 }
             }
 
-            return newPathFound;
+            return canMoveToCoordinate;
         }
 
         private bool CoordinateWasNotVisited(Coordinate newCord) => !_alreadyVisitedCoordinates.Contains(newCord);
 
-        private void AddMoveToMazePath(Coordinate newCord) => _pathThroughMaze.Push(newCord);
+        private void MoveNextTo(Coordinate newCord) => _pathThroughMaze.Push(newCord);
     }
 }
