@@ -11,14 +11,19 @@ namespace mazeDfsAlgorithm
         private readonly Stack<Coordinate> _pathThroughMaze;
         private readonly HashSet<Coordinate> _alreadyVisitedCoordinates;
         private readonly Action<Coordinate> _moveToNext;
+        private readonly Action<Coordinate> _cantMoveNext;
         private bool _exitFound;
 
-        public SearchThroughMaze(Maze maze, Action<Coordinate> moveToNext)
+        public SearchThroughMaze(
+            Maze maze, 
+            Action<Coordinate> moveToNext,
+            Action<Coordinate> cantMoveNext)
         {
             _maze = maze;
             _pathThroughMaze = new Stack<Coordinate>();
             _alreadyVisitedCoordinates = new HashSet<Coordinate>();
             _moveToNext = moveToNext;
+            _cantMoveNext = cantMoveNext;
         }
 
         public List<Coordinate> Search()
@@ -52,7 +57,11 @@ namespace mazeDfsAlgorithm
             return new List<Coordinate>();
         }
 
-        private void CantMoveGoOneStepBack() => _pathThroughMaze.Pop();
+        private void CantMoveGoOneStepBack()
+        {
+            var coordinate = _pathThroughMaze.Pop();
+            _cantMoveNext?.Invoke(coordinate);
+        }
 
         private bool CanMoveRightFrom(Coordinate coordinate)
             => CanMoveTo(new Coordinate { X = coordinate.X, Y = coordinate.Y + 1 });

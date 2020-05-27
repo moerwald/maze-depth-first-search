@@ -20,7 +20,8 @@ namespace mazeDfsAlgorithm.Tests
 
             var result = new SearchThroughMaze(
                 new Maze(maze), 
-                newCord => { })
+                newCord => { },
+                deadCord => { })
                 .Search();
 
             Assert.IsTrue(result[4].Equals(new Coordinate { X = 0, Y = 0 }));
@@ -41,7 +42,8 @@ namespace mazeDfsAlgorithm.Tests
 
             var result = new SearchThroughMaze(
                 new Maze(maze), 
-                newCord => { })
+                newCord => { },
+                deadCord => { })
                 .Search();
 
             Assert.IsTrue(result[4].Equals(new Coordinate { X = 0, Y = 0 }));
@@ -62,7 +64,8 @@ namespace mazeDfsAlgorithm.Tests
 
             var result = new SearchThroughMaze(
                 new Maze(maze), 
-                newCord => { })
+                newCord => { },
+                deadCord => { })
                 .Search();
 
             Assert.IsTrue(result.Count == 0);

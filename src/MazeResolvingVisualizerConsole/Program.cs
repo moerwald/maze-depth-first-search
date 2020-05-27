@@ -20,14 +20,24 @@ namespace MazeResolvingVisualizerConsole
 
             var mazeObject = new Maze(maze);
             var mazeDrawer = new ConsoleMazeDrawer();
-            var algo = new SearchThroughMaze(mazeObject, coord =>
-            {
-                mazeObject.SetValueAt(coord, 8);
-                mazeDrawer.RedrawMaze(mazeObject);
-            });
+            var algo = new SearchThroughMaze(
+                mazeObject,
+                coord => Redraw(coord, mazeObject, mazeDrawer, 8),
+                deadCord => Redraw(deadCord, mazeObject, mazeDrawer, 0)
+                );
             var result = algo.Search();
 
             PrintResult(result);
+        }
+
+        private static void Redraw(
+            Coordinate coord, 
+            Maze mazeObject, 
+            ConsoleMazeDrawer mazeDrawer,
+            int newValue)
+        {
+            mazeObject.SetValueAt(coord, newValue);
+            mazeDrawer.RedrawMaze(mazeObject);
         }
 
         private static void PrintResult(System.Collections.Generic.List<Coordinate> result)
