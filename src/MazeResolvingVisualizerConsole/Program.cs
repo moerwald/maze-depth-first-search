@@ -1,5 +1,6 @@
 ﻿using mazeDfsAlgorithm;
 using System;
+using System.Linq;
 using System.Threading;
 
 namespace MazeResolvingVisualizerConsole
@@ -9,13 +10,13 @@ namespace MazeResolvingVisualizerConsole
         static void Main(string[] args)
         {
             var maze = new int[,]{
-                {0, 0 , 0, 0, 0},
-                {1, 1 , 0, 1, 0},
-                {0, 1 , 0, 0, 0},
-                {0, 1 , 0, 1, 1},
-                {0, 1 , 0, 1, 0},
-                {1, 1 , 0, 0, 1},
-                {2, 0 , 0, 0, 0},
+                {0, 0 , 0, 0, 0, 0, 0},
+                {1, 1 , 0, 1, 0, 1, 1},
+                {0, 1 , 0, 1, 0, 0, 0},
+                {1, 1 , 1, 1, 1, 1, 0},
+                {0, 1 , 0, 0, 0, 0, 0},
+                {1, 1 , 0, 0, 1, 1, 0},
+                {0, 2 , 0, 0, 0, 1, 0},
                 };
             var mazeObject = new Maze(maze);
             var algo = new SearchThroughMaze(mazeObject, coord =>
@@ -23,11 +24,22 @@ namespace MazeResolvingVisualizerConsole
                 mazeObject.SetValueAt(coord, 8);
                 RedrawMaze(mazeObject);
             });
-            if (algo.Search().Count == 0)
+            var result = algo.Search();
+
+            var origForeGroundColor = Console.ForegroundColor;
+            Console.WriteLine("====================");
+            if (result.Any())
             {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Way throuhg maze successfully found");
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("No way through maze found");
             }
 
+            Console.ForegroundColor = origForeGroundColor;
         }
 
         private static void RedrawMaze(Maze mazeObject)
